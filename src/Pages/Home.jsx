@@ -27,7 +27,6 @@ const Home = () => {
         }
 
         const userData = await response.json();
-        console.log(userData);
         setUserData(userData);
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -137,7 +136,6 @@ const Home = () => {
         </button>
       </form>
 
-      {/* Display Zikr List */}
       <h2>Your Zikrs</h2>
       <ul>
         {zikrData.map((zikr) => (

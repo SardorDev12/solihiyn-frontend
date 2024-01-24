@@ -37,7 +37,9 @@ function Signup() {
         const data = await res.json();
         setErrors(data.errors || ["Something went wrong. Please try again."]);
       }
-    } catch {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
