@@ -1,54 +1,3 @@
-// import React, { useEffect, useState } from "react";
-
-// const Home = () => {
-//   const [userData, setUserData] = useState(null);
-
-//   useEffect(() => {
-//     const fetchUserData = async () => {
-//       try {
-//         // Fetch the authentication token from wherever you have stored it (e.g., localStorage)
-//         const token = localStorage.getItem("authToken");
-
-//         // Make a request to get the authenticated user data
-//         const response = await fetch("http://127.0.0.1:8000/api/v1/home/", {
-//           headers: {
-//             "Content-Type": "application/json",
-//             Authorization: `Bearer ${token}`,
-//           },
-//         });
-
-//         if (!response.ok) {
-//           // Handle error, e.g., redirect to login page
-//           console.error("Failed to fetch user data");
-//           window.location.href = "/signin";
-//           return;
-//         }
-
-//         // Parse the response data
-//         const userData = await response.json();
-
-//         // Set the user data in the state
-//         setUserData(userData);
-//       } catch (error) {
-//         console.error("Error fetching user data:", error);
-//       }
-//     };
-
-//     // Invoke the fetchUserData function
-//     fetchUserData();
-//   }, []); // Empty dependency array means this effect runs once when the component mounts
-
-//   return (
-//     <div>
-//       <h1>Welcome to the Home Page</h1>
-//       <p>Welcome {userData?.response}</p>
-//       {userData ? <div></div> : <p>Loading user data...</p>}
-//     </div>
-//   );
-// };
-
-// export default Home;
-
 import React, { useState, useEffect } from "react";
 
 const Home = () => {
@@ -78,15 +27,13 @@ const Home = () => {
         }
 
         const userData = await response.json();
+        console.log(userData);
         setUserData(userData);
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
     };
 
-    // Fetch Zikr data
-
-    // Invoke the fetchUserData and fetchZikrData functions
     fetchUserData();
     fetchZikrData();
   }, []);
@@ -134,10 +81,8 @@ const Home = () => {
         return;
       }
 
-      // Refresh the Zikr data after creating a new one
       fetchZikrData();
 
-      // Clear the form fields
       setNewZikrText("");
       setNewZikrCategory("");
       setNewZikrMeaning("");
@@ -150,7 +95,7 @@ const Home = () => {
   return (
     <div>
       <h1>Welcome to the Home Page</h1>
-      <p>Welcome {userData?.response}</p>
+      <p>Welcome {userData?.first_name}</p>
 
       {/* Zikr Form */}
       <h2>Create a New Zikr</h2>

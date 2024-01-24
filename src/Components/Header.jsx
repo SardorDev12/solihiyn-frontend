@@ -1,21 +1,35 @@
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Logout from "../Pages/Signout";
 
 function Header() {
+  const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!isDropdownOpen);
+  };
+
   return (
     <div>
       <header>
-        <div className="logo">
-          <Link to="/">Home</Link>
-        </div>
+        <div className="logo"></div>
         <ul>
-          <li>
-            <Link to="/signup">Sign up</Link>
+          <li className="dropdown" onClick={toggleDropdown}>
+            <span>Menu</span>
+            {isDropdownOpen && (
+              <ul className="dropdown-content">
+                <li>
+                  <Link to="/signup">Sign up</Link>
+                </li>
+                <li>
+                  <Link to="/signin">Sign in</Link>
+                </li>
+                <Link>
+                  <Logout />
+                </Link>
+              </ul>
+            )}
           </li>
-          <li>
-            <Link to="/signin">Sign in</Link>
-          </li>
-          <Logout />
         </ul>
       </header>
     </div>

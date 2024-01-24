@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 
 function Signup() {
+  const [errors, setErrors] = useState(null);
   const [formData, setFormData] = useState({
-    name: "",
-    surname: "",
+    first_name: "",
+    last_name: "",
     username: "",
     password: "",
   });
@@ -15,35 +16,41 @@ function Signup() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          first_name: formData.name, // Map 'name' to 'first_name'
-          last_name: formData.surname, // Map 'surname' to 'last_name'
+          first_name: formData.first_name,
+          last_name: formData.last_name,
           username: formData.username,
           password: formData.password,
-          password2: formData.password, // Map 'password' to 'password2'
         }),
       });
-      setFormData({
-        name: "",
-        surname: "",
-        username: "",
-        password: "",
-      });
-    } catch (error) {
-      console.log(error);
-    }
+
+      if (res.ok) {
+        setFormData({
+          first_name: "",
+          last_name: "",
+          username: "",
+          password: "",
+        });
+        window.location.href = "/signin";
+      } else if (res.status === 500) {
+        setErrors(["User with this information already exists."]);
+      } else {
+        const data = await res.json();
+        setErrors(data.errors || ["Something went wrong. Please try again."]);
+      }
+    } catch {}
   };
 
   return (
     <form onSubmit={handleSubmit}>
       <h1>Sign up</h1>
       <div>
-        <label htmlFor="name">Name</label>
+        <label htmlFor="first_name">Name</label>
         <input
           type="text"
-          id="name"
+          id="first_name"
           placeholder="Name"
           autoComplete="off"
-          value={formData["name"]}
+          value={formData["first_name"]}
           onChange={(e) =>
             setFormData((prevData) => ({
               ...prevData,
@@ -53,13 +60,13 @@ function Signup() {
         />
       </div>
       <div>
-        <label htmlFor="surname">Surname</label>
+        <label htmlFor="last_name">Surname</label>
         <input
           type="text"
-          id="surname"
+          id="last_name"
           placeholder="Surname"
           autoComplete="off"
-          value={formData["surname"]}
+          value={formData["last_name"]}
           onChange={(e) =>
             setFormData((prevData) => ({
               ...prevData,
@@ -101,6 +108,7 @@ function Signup() {
         />
       </div>
       <button type="submit">Sign up</button>
+      <p>{errors}</p>
     </form>
   );
 }
