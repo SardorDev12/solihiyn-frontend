@@ -1,0 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import "./styles/variables.scss";
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #2a4563;
+  color: white;
+  font-family: "Inter", sans-serif;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: white;
+}
+
+.container {
+  max-width: 1640px;
+  width: 100%;
+  margin: 0 auto;
+  padding: $base-pad;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+button {
+  outline: none;
+  border: none;
+  border-radius: 3px;
+}
+
+button {
+  background-color: orange;
+  padding: 0.5rem 1.5rem;
+  margin: 0 0.5rem;
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: white;
+  cursor: pointer;
+  &.logout-btn {
+    &:hover {
+      background-color: rgb(206, 34, 34);
+    }
+  }
+}

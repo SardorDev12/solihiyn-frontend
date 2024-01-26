@@ -1,0 +1,7 @@
+@mixin flex-col {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+$base-pad: 1rem 3rem;

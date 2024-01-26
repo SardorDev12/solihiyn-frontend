@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import "../styles/home.scss";
+import PostZikrs from "../Components/PostZikrs";
 
 const Home = () => {
   const [userData, setUserData] = useState(null);
@@ -8,7 +10,6 @@ const Home = () => {
   const [newZikrMeaning, setNewZikrMeaning] = useState("");
   const [newZikrCount, setNewZikrCount] = useState("");
 
-  // Fetch user data
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -29,6 +30,7 @@ const Home = () => {
         const userData = await response.json();
         setUserData(userData);
       } catch (error) {
+        window.location.href = "/signin";
         console.error("Error fetching user data:", error);
       }
     };
@@ -92,59 +94,21 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <h1>Welcome to the Home Page</h1>
-      <p>Welcome {userData?.first_name}</p>
-
-      {/* Zikr Form */}
-      <h2>Create a New Zikr</h2>
-      <form>
-        <label htmlFor="newZikrText">Text:</label>
-        <input
-          type="text"
-          id="newZikrText"
-          value={newZikrText}
-          onChange={(e) => setNewZikrText(e.target.value)}
-        />
-
-        <label htmlFor="newZikrCategory">Category:</label>
-        <input
-          type="text"
-          id="newZikrCategory"
-          value={newZikrCategory}
-          onChange={(e) => setNewZikrCategory(e.target.value)}
-        />
-
-        <label htmlFor="newZikrMeaning">Meaning:</label>
-        <input
-          type="text"
-          id="newZikrMeaning"
-          value={newZikrMeaning}
-          onChange={(e) => setNewZikrMeaning(e.target.value)}
-        />
-
-        <label htmlFor="newZikrCount">Count:</label>
-        <input
-          type="text"
-          id="newZikrCount"
-          value={newZikrCount}
-          onChange={(e) => setNewZikrCount(e.target.value)}
-        />
-
-        <button type="button" onClick={handleCreateZikr}>
-          Create Zikr
-        </button>
-      </form>
-
-      <h2>Your Zikrs</h2>
-      <ul>
+    <main className="home container">
+      <div className="zikr-cards">
         {zikrData.map((zikr) => (
-          <li key={zikr.id}>
-            {zikr.text} - {zikr.category} - {zikr.meaning} - {zikr.count}
-          </li>
+          <div className="card" key={zikr.id}>
+            <h4 className="zikr-title">{zikr.category}</h4>
+            <p className="zikr-text">{zikr.text}</p>
+            <div className="zikr-info">
+              <p className="zikr-meaning">Meaning</p>
+              <p className="zikr-count">{zikr.count}</p>
+            </div>
+          </div>
         ))}
-      </ul>
-    </div>
+      </div>
+      {/* <PostZikrs /> */}
+    </main>
   );
 };
 

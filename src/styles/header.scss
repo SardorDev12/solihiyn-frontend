@@ -1,0 +1,43 @@
+@import "./variables.scss";
+
+.header {
+  border-bottom: 1px solid white;
+  padding: $base-pad;
+  padding-left: 0;
+  padding-right: 0;
+  div:first-child {
+    @include flex-col;
+  }
+  .profile {
+    @include flex-col;
+
+    .status {
+      margin-right: 3rem;
+      button {
+        &:first-child {
+          background-color: #4caf50;
+          &:hover {
+            background-color: #569859;
+          }
+        }
+        &:nth-child(2) {
+          background-color: #ff5722;
+          &:hover {
+            background-color: #c9522d;
+          }
+        }
+      }
+    }
+    .profile-info {
+      @include flex-col;
+
+      .username {
+        font-size: 1.5rem;
+      }
+
+      .user-img {
+        font-size: 2rem;
+      }
+    }
+  }
+}

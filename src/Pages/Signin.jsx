@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import "../styles/signin.scss";
 
 function Signin() {
   const [formData, setFormData] = useState({
@@ -31,52 +33,61 @@ function Signin() {
       const data = await response.json();
       const token = data.access;
 
-      // Store the token in localStorage
       localStorage.setItem("authToken", token);
-
-      // Redirect or perform other actions after successful login
     } catch (error) {
       console.error("Error during login:", error);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h1>Sign in</h1>
-      <div>
-        <label htmlFor="username">Username</label>
-        <input
-          type="text"
-          id="username"
-          placeholder="Username"
-          autoComplete="off"
-          value={formData["username"]}
-          onChange={(e) =>
-            setFormData((prevData) => ({
-              ...prevData,
-              [e.target.id]: e.target.value,
-            }))
-          }
-        />
-      </div>
-      <div>
-        <label htmlFor="password">Password</label>
-        <input
-          type="password"
-          id="password"
-          placeholder="Password"
-          autoComplete="off"
-          value={formData["password"]}
-          onChange={(e) =>
-            setFormData((prevData) => ({
-              ...prevData,
-              [e.target.id]: e.target.value,
-            }))
-          }
-        />
-      </div>
-      <button type="submit">Sign in</button>
-    </form>
+    <div className="signin-section">
+      <h1 className="section-title">SOLIHIYN</h1>
+
+      <form onSubmit={handleSubmit} className="signin-form">
+        <h1 className="form-title">Sign in</h1>
+        <div className="form-input">
+          <label htmlFor="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            placeholder="Username"
+            autoComplete="off"
+            value={formData["username"]}
+            onChange={(e) =>
+              setFormData((prevData) => ({
+                ...prevData,
+                [e.target.id]: e.target.value,
+              }))
+            }
+          />
+        </div>
+        <div className="form-input">
+          <label htmlFor="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            placeholder="Password"
+            autoComplete="off"
+            value={formData["password"]}
+            onChange={(e) =>
+              setFormData((prevData) => ({
+                ...prevData,
+                [e.target.id]: e.target.value,
+              }))
+            }
+          />
+        </div>
+        <button className="form-submit" type="submit">
+          Sign in
+        </button>
+        <p>
+          If you don't have account,{" "}
+          <Link to="/signup" className="form-redirect">
+            Sign up.
+          </Link>
+        </p>
+      </form>
+    </div>
   );
 }
 

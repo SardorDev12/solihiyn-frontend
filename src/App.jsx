@@ -12,11 +12,11 @@ function App() {
       <Routes>
         <Route path="/" element={<Global />}>
           <Route index element={<Home />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/add" element={<Add />} />
-          <Route path="/profile" element={<Profile />} />
         </Route>
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/add" element={<Add />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );

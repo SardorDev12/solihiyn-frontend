@@ -1,38 +1,28 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Logout from "../Pages/Signout";
+import { FaUser } from "react-icons/fa";
+import "../styles/header.scss";
 
-function Header() {
-  const [isDropdownOpen, setDropdownOpen] = useState(false);
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!isDropdownOpen);
-  };
-
+function Header({ userInfo }) {
   return (
-    <div>
-      <header>
-        <div className="logo"></div>
-        <ul>
-          <li className="dropdown" onClick={toggleDropdown}>
-            <span>Menu</span>
-            {isDropdownOpen && (
-              <ul className="dropdown-content">
-                <li>
-                  <Link to="/signup">Sign up</Link>
-                </li>
-                <li>
-                  <Link to="/signin">Sign in</Link>
-                </li>
-                <Link>
-                  <Logout />
-                </Link>
-              </ul>
-            )}
-          </li>
-        </ul>
-      </header>
-    </div>
+    <header className="header">
+      <div className="container">
+        <div className="logo">
+          <h2 className="logo-title">SOLIHIYN</h2>
+        </div>
+        <div className="profile">
+          <div className="status">
+            <button type="button">Active</button>
+            <button type="button">Missed</button>
+          </div>
+          <div className="profile-info">
+            <div className="username">{userInfo.username}</div>
+            <FaUser className="user-img" />
+          </div>
+          <Logout />
+        </div>
+      </div>
+    </header>
   );
 }
 
