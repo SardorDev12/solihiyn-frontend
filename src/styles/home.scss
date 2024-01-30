@@ -1,4 +1,75 @@
+@import "./variables.scss";
+
 .zikr-cards {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  padding: 2rem 0;
+
+  .card {
+    background-color: #bee3f8;
+    border-radius: $border-rad;
+    padding: 1rem;
+    color: #001f3f;
+
+    .zikr-text {
+      padding: 0.5rem;
+      border: 1px solid black;
+      min-height: 4rem;
+      border-radius: $border-rad;
+      margin: 1rem 0;
+    }
+    .zikr-info {
+      @include flex-col;
+      .zikr-meaning__link {
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      .zikr-meaning__modal {
+        position: absolute;
+        top: 5rem;
+        left: 50%;
+        width: 50rem;
+        min-height: 12rem;
+        transform: translate(-50%, 50%);
+        background-color: #bee3f8;
+        display: none;
+        padding: $base-pad;
+        padding-top: 3rem;
+        z-index: 2;
+        border-radius: $border-rad;
+
+        .zikr-meaning__close {
+          position: absolute;
+          right: 0;
+          top: 0;
+          margin: 1rem;
+          font-size: 1.5rem;
+          color: rgb(158, 52, 52);
+          cursor: pointer;
+        }
+
+        &.show {
+          display: block;
+        }
+      }
+      .zikr-count {
+        font-size: 2rem;
+      }
+    }
+  }
+}
+
+.overlay {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.457);
+  &.show {
+    display: block;
+  }
 }
