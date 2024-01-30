@@ -30,6 +30,8 @@
     }
     .profile-info {
       @include flex-col;
+      position: relative;
+      cursor: pointer;
 
       .username {
         font-size: 1.5rem;
@@ -37,6 +39,29 @@
 
       .user-img {
         font-size: 2rem;
+      }
+
+      .profile-menu {
+        background-color: #001f3f;
+        position: absolute;
+        top: 2.5rem;
+        right: 0;
+        width: 13rem;
+        border-radius: $border-rad;
+        padding: 0.5rem 1rem;
+
+        .menu-item {
+          @include flex-col;
+          justify-content: flex-start;
+          gap: 0.5rem;
+          padding: 0.5rem 0;
+          font-size: 1.2rem;
+          cursor: pointer;
+
+          &:hover {
+            color: #ccc;
+          }
+        }
       }
     }
   }
