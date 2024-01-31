@@ -11,19 +11,22 @@ function Add() {
   const handleCreateZikr = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch("http://127.0.0.1:8000/api/v1/zikrs/", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          text: newZikrText,
-          category: newZikrCategory,
-          meaning: newZikrMeaning,
-          count: newZikrCount,
-        }),
-      });
+      const response = await fetch(
+        "https://sardorfarhodogli.pythonanywhere.com/api/v1/zikrs/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            text: newZikrText,
+            category: newZikrCategory,
+            meaning: newZikrMeaning,
+            count: newZikrCount,
+          }),
+        }
+      );
 
       if (!response.ok) {
         console.error("Failed to create Zikr");

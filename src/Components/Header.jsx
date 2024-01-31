@@ -19,12 +19,15 @@ function Header({ userInfo }) {
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch("http://127.0.0.1:8000/api/v1/logout/", {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "https://sardorfarhodogli.pythonanywhere.com/api/v1/logout/",
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (response.status === 200) {
         console.log("Logout successful");

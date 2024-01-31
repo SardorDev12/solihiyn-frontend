@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../styles/home.scss";
-import PostZikrs from "../Components/PostZikrs";
 import { FaWindowClose } from "react-icons/fa";
 
 const Home = () => {
@@ -14,7 +13,7 @@ const Home = () => {
     try {
       const token = localStorage.getItem("authToken");
       const response = await fetch(
-        `http://127.0.0.1:8000/api/v1/zikrs/update/${zikrId}/inc/`,
+        `https://sardorfarhodogli.pythonanywhere.com/api/v1/zikrs/update/${zikrId}/inc/`,
         {
           method: "PATCH",
           headers: {
@@ -56,12 +55,15 @@ const Home = () => {
     const fetchUserData = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const response = await fetch("http://127.0.0.1:8000/api/v1/home/", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const response = await fetch(
+          "https://sardorfarhodogli.pythonanywhere.com/api/v1/home/",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!response.ok) {
           console.error("Failed to fetch user data");
@@ -84,12 +86,15 @@ const Home = () => {
   const fetchZikrData = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch("http://127.0.0.1:8000/api/v1/zikrs/", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await fetch(
+        "https://sardorfarhodogli.pythonanywhere.com/api/v1/zikrs/",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       if (!response.ok) {
         console.error("Failed to fetch Zikr data");
@@ -102,7 +107,6 @@ const Home = () => {
       console.error("Error fetching Zikr data:", error);
     }
   };
-  
 
   return (
     <main className="home container">
