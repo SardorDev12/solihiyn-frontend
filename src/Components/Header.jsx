@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Logout from "../Pages/Signout";
 import { FaUser } from "react-icons/fa";
 import "../styles/header.scss";
@@ -6,6 +6,7 @@ import { FiEdit } from "react-icons/fi";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { GoSignOut } from "react-icons/go";
+import { Link } from "react-router-dom";
 
 function Header({ userInfo }) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -41,35 +42,37 @@ function Header({ userInfo }) {
     <header className="header">
       <div className="container">
         <div className="logo">
-          <h2 className="logo-title">SOLIHIYN</h2>
+          <Link to="/" className="logo-title">
+            SOLIHIYN
+          </Link>
         </div>
         <div className="profile">
-          <div className="status">
+          {/* <div className="status">
             <button type="button">Active</button>
             <button type="button">Missed</button>
-          </div>
+          </div> */}
           <div className="profile-info">
             <div className="username">{userInfo.username}</div>
             <FaUser onClick={handleShowProfileMenu} className="user-img" />
             {showProfileMenu && (
               <ul className="profile-menu">
-                <li className="menu-item">
+                <Link to="/edit" className="menu-item">
                   <FiEdit />
                   <span>Edit</span>
-                </li>
-                <li className="menu-item">
+                </Link>
+                <Link to="/add" className="menu-item">
                   <MdOutlineAddBox />
                   <span>Add</span>
-                </li>
+                </Link>
                 <hr />
-                <li className="menu-item">
+                <Link to="/profile" className="menu-item">
                   <CgProfile />
                   <span>Profile</span>
-                </li>
-                <li className="menu-item" onClick={handleLogout}>
+                </Link>
+                <Link className="menu-item" onClick={handleLogout}>
                   <GoSignOut />
                   <span>Logout</span>
-                </li>
+                </Link>
               </ul>
             )}
           </div>

@@ -6,19 +6,40 @@ import { FaWindowClose } from "react-icons/fa";
 const Home = () => {
   const [userData, setUserData] = useState(null);
   const [zikrData, setZikrData] = useState([]);
-  const [newZikrText, setNewZikrText] = useState("");
-  const [newZikrCategory, setNewZikrCategory] = useState("");
-  const [newZikrMeaning, setNewZikrMeaning] = useState("");
-  const [newZikrCount, setNewZikrCount] = useState("");
+
   const [selectedZikrId, setSelectedZikrId] = useState(null);
   const [showMeaningModal, setShowMeaningModal] = useState(false);
 
-  const handleCardClick = (zikrId) => {
-    setZikrData((prevZikrData) =>
-      prevZikrData.map((zikr) =>
-        zikr.id === zikrId ? { ...zikr, zikrCount: zikr.zikrCount + 1 } : zikr
-      )
-    );
+  const handleCardClick = async (zikrId) => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/v1/zikrs/update/${zikrId}/inc/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (!response.ok) {
+        console.error(`Failed to update Zikr count for ID ${zikrId}`);
+        return;
+      }
+
+      const updatedZikr = await response.json();
+
+      setZikrData((prevZikrData) =>
+        prevZikrData.map((zikr) =>
+          zikr.id === zikrId
+            ? { ...zikr, count_val: updatedZikr.count_val }
+            : zikr
+        )
+      );
+    } catch (error) {
+      console.error(`Error updating Zikr count for ID ${zikrId}:`, error);
+    }
   };
 
   const handleMeaningClick = (zikrId, event) => {
@@ -76,44 +97,12 @@ const Home = () => {
       }
 
       let zikrData = await response.json();
-      zikrData = zikrData.map((zikr) => ({ ...zikr, zikrCount: 0 }));
       setZikrData(zikrData);
     } catch (error) {
       console.error("Error fetching Zikr data:", error);
     }
   };
-  // const handleCreateZikr = async () => {
-  //   try {
-  //     const token = localStorage.getItem("authToken");
-  //     const response = await fetch("http://127.0.0.1:8000/api/v1/zikrs/", {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //       body: JSON.stringify({
-  //         text: newZikrText,
-  //         category: newZikrCategory,
-  //         meaning: newZikrMeaning,
-  //         count: newZikrCount,
-  //       }),
-  //     });
-
-  //     if (!response.ok) {
-  //       console.error("Failed to create Zikr");
-  //       return;
-  //     }
-
-  //     fetchZikrData();
-
-  //     setNewZikrText("");
-  //     setNewZikrCategory("");
-  //     setNewZikrMeaning("");
-  //     setNewZikrCount("");
-  //   } catch (error) {
-  //     console.error("Error creating Zikr:", error);
-  //   }
-  // };
+  
 
   return (
     <main className="home container">
@@ -147,7 +136,7 @@ const Home = () => {
                 <p className="zikr-meaning">{zikr.meaning}</p>
               </div>
               <p className="zikr-count">
-                {zikr.zikrCount}/{zikr.count}
+                {zikr.count_val}/{zikr.count}
               </p>
             </div>
           </div>
