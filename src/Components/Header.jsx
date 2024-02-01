@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Logout from "../Pages/Signout";
 import { FaUser } from "react-icons/fa";
 import "../styles/header.scss";
@@ -8,7 +8,7 @@ import { CgProfile } from "react-icons/cg";
 import { GoSignOut } from "react-icons/go";
 import { Link } from "react-router-dom";
 
-function Header({ userInfo }) {
+function Header({ userInfo, api }) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
 
   const handleShowProfileMenu = () => {
@@ -19,15 +19,12 @@ function Header({ userInfo }) {
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch(
-        "https://sardorfarhodogli.pythonanywhere.com/api/v1/logout/",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${api}/api/v1/logout/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.status === 200) {
         console.log("Logout successful");

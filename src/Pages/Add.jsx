@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import prayingBoy from "../Images/praying boy.png";
 import "../styles/add.scss";
 
-function Add() {
+function Add({ api }) {
   const [newZikrText, setNewZikrText] = useState("");
   const [newZikrCategory, setNewZikrCategory] = useState("");
   const [newZikrMeaning, setNewZikrMeaning] = useState("");
@@ -11,22 +11,19 @@ function Add() {
   const handleCreateZikr = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch(
-        "https://sardorfarhodogli.pythonanywhere.com/api/v1/zikrs/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            text: newZikrText,
-            category: newZikrCategory,
-            meaning: newZikrMeaning,
-            count: newZikrCount,
-          }),
-        }
-      );
+      const response = await fetch(`${api}/api/v1/zikrs/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          text: newZikrText,
+          category: newZikrCategory,
+          meaning: newZikrMeaning,
+          count: newZikrCount,
+        }),
+      });
 
       if (!response.ok) {
         console.error("Failed to create Zikr");
@@ -55,6 +52,7 @@ function Add() {
                 type="text"
                 autoComplete="off"
                 id="newZikrCategory"
+                placeholder="Zikrlar"
                 value={newZikrCategory}
                 onChange={(e) => setNewZikrCategory(e.target.value)}
               />
@@ -65,6 +63,7 @@ function Add() {
                 type="number"
                 autoComplete="off"
                 id="newZikrCount"
+                placeholder="33"
                 value={newZikrCount}
                 onChange={(e) => setNewZikrCount(e.target.value)}
               />
@@ -75,6 +74,7 @@ function Add() {
             <textarea
               type="text"
               id="newZikrText"
+              placeholder="Alhamdulillah"
               value={newZikrText}
               onChange={(e) => setNewZikrText(e.target.value)}
             />
@@ -84,6 +84,7 @@ function Add() {
             <textarea
               type="text"
               id="newZikrMeaning"
+              placeholder="Allohga hamdlar bo'lsin!"
               value={newZikrMeaning}
               onChange={(e) => setNewZikrMeaning(e.target.value)}
             />

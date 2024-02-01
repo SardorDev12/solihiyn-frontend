@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../styles/signup.scss";
 import { useNavigate } from "react-router-dom";
 
-function Signup() {
+function Signup({ api }) {
   const [errors, setErrors] = useState(null);
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -16,19 +16,16 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(
-        "https://sardorfarhodogli.pythonanywhere.com/api/v1/register/",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            first_name: formData.first_name,
-            last_name: formData.last_name,
-            username: formData.username,
-            password: formData.password,
-          }),
-        }
-      );
+      const res = await fetch(`${api}/api/v1/register/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          first_name: formData.first_name,
+          last_name: formData.last_name,
+          username: formData.username,
+          password: formData.password,
+        }),
+      });
 
       if (res.ok) {
         setFormData({

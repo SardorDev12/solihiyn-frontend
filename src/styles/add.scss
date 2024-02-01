@@ -43,4 +43,10 @@
       }
     }
   }
+
+  .add-page__img {
+    @media screen and (max-width: $tablet) {
+      display: none;
+    }
+  }
 }

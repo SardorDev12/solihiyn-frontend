@@ -2,22 +2,19 @@ import { Outlet } from "react-router-dom";
 import Header from "../../Components/Header";
 import { useEffect, useState } from "react";
 
-function GlobalLayout() {
+function GlobalLayout({ api }) {
   const [userInfo, setUserInfo] = useState(null);
 
   useEffect(() => {
     const fetchUserInfo = async () => {
       try {
         const token = localStorage.getItem("authToken");
-        const response = await fetch(
-          "https://sardorfarhodogli.pythonanywhere.com/api/v1/home/",
-          {
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+        const response = await fetch(`${api}/api/v1/home/`, {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
         const data = await response.json();
         setUserInfo(data);
       } catch (error) {

@@ -1,21 +1,17 @@
-import React, { useState } from "react";
+import { useContext } from "react";
+import { APIContext } from "../Components/Context";
 
 const Logout = () => {
-  const [logoutMessage, setLogoutMessage] = useState("");
-
-  // Signout.jsx
+  const api = useContext(APIContext);
   const handleLogout = async () => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch(
-        "https://sardorfarhodogli.pythonanywhere.com/api/v1/logout/",
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${api}/api/v1/logout/`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.status === 200) {
         console.log("Logout successful");

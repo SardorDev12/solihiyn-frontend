@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/signin.scss";
 
-function Signin() {
+function Signin({ api }) {
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -14,19 +14,16 @@ function Signin() {
     const { username, password } = formData;
 
     try {
-      const response = await fetch(
-        "https://sardorfarhodogli.pythonanywhere.com/api/v1/login/",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username,
-            password,
-          }),
-        }
-      );
+      const response = await fetch(`${api}/api/v1/login/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          username,
+          password,
+        }),
+      });
       window.location.href = "/";
       if (!response.ok) {
         console.error("Login failed");
