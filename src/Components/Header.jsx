@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import Logout from "../Pages/Signout";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import "../styles/header.scss";
 import { FiEdit } from "react-icons/fi";
@@ -10,10 +9,28 @@ import { Link } from "react-router-dom";
 
 function Header({ userInfo, api }) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const profileMenuRef = useRef(null);
 
   const handleShowProfileMenu = () => {
     setShowProfileMenu(!showProfileMenu);
   };
+
+  const handleClickOutsideMenu = (event) => {
+    if (
+      (profileMenuRef.current &&
+        !profileMenuRef.current.contains(event.target)) ||
+      event.target.classList.contains("menu-click")
+    ) {
+      setShowProfileMenu(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutsideMenu);
+    return () => {
+      document.removeEventListener("click", handleClickOutsideMenu);
+    };
+  }, []);
 
   // Logout
   const handleLogout = async () => {
@@ -51,27 +68,27 @@ function Header({ userInfo, api }) {
             <button type="button">Active</button>
             <button type="button">Missed</button>
           </div> */}
-          <div className="profile-info">
+          <div ref={profileMenuRef} className="profile-info">
             <div className="username">{userInfo.username}</div>
             <FaUser onClick={handleShowProfileMenu} className="user-img" />
             {showProfileMenu && (
               <ul className="profile-menu">
-                <Link to="/edit" className="menu-item">
+                <Link to="/edit" className="menu-item menu-click">
                   <FiEdit />
-                  <span>Edit</span>
+                  <span className="menu-click">Edit</span>
                 </Link>
-                <Link to="/add" className="menu-item">
+                <Link to="/add" className="menu-item menu-click">
                   <MdOutlineAddBox />
-                  <span>Add</span>
+                  <span className="menu-click">Add</span>
                 </Link>
                 <hr />
-                <Link to="/profile" className="menu-item">
+                <Link to="/profile" className="menu-item menu-click">
                   <CgProfile />
-                  <span>Profile</span>
+                  <span className="menu-click">Profile</span>
                 </Link>
-                <Link className="menu-item" onClick={handleLogout}>
+                <Link className="menu-item menu-click" onClick={handleLogout}>
                   <GoSignOut />
-                  <span>Logout</span>
+                  <span className="menu-click">Logout</span>
                 </Link>
               </ul>
             )}
