@@ -1,0 +1,62 @@
+@import "./variables.scss";
+
+.edit-modal {
+  position: absolute;
+  top: -5rem;
+  left: 50%;
+  width: 50rem;
+  min-height: 12rem;
+  transform: translate(-50%, 50%);
+  background-color: #bee3f8;
+  padding: $base-pad;
+  z-index: 2;
+  border-radius: $border-rad;
+  color: black;
+
+  @media screen and (max-width: $tablet) {
+    width: 90vw;
+  }
+
+  .edit-modal__header {
+    @include flex-col;
+  }
+
+  .edit-modal__close {
+    margin: 1rem;
+    font-size: 1.5rem;
+    color: rgb(158, 52, 52);
+    cursor: pointer;
+  }
+
+  .form-inputs {
+    .cat-count {
+      gap: 1rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .form-input {
+      @include flex-col;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin: 1rem 0;
+
+      input,
+      textarea {
+        width: 100%;
+        background: transparent;
+        border: 1px solid rgb(0, 0, 0);
+        color: rgb(0, 0, 0);
+      }
+    }
+  }
+  .update-btn {
+    background-color: #4caf50;
+    display: block;
+    margin: 0 auto;
+    &:hover {
+      background-color: #569859;
+    }
+  }
+}

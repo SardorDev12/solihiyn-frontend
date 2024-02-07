@@ -1,41 +1,78 @@
 import React, { useState, useEffect } from "react";
 import "../styles/home.scss";
 import { FaWindowClose } from "react-icons/fa";
+import { MdEditSquare } from "react-icons/md";
+import { MdDelete } from "react-icons/md";
+import EditModal from "../Components/EditModal";
 
 const Home = ({ api }) => {
   const [userData, setUserData] = useState(null);
   const [zikrData, setZikrData] = useState([]);
+  const [update, setUpdate] = useState(false);
 
   const [selectedZikrId, setSelectedZikrId] = useState(null);
   const [showMeaningModal, setShowMeaningModal] = useState(false);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [editCardId, setEditCardId] = useState(null);
 
-  const handleCardClick = async (zikrId) => {
+  const handleShowEditModal = (id) => {
+    setShowEditModal(!showEditModal);
+    setEditCardId(id);
+  };
+
+  const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem("authToken");
-      const response = await fetch(
-        `${api}/api/v1/zikrs/update/${zikrId}/inc/`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await fetch(`${api}/api/v1/zikrs/delete/${id}/`, {
+        method: "DELETE", // Specify the DELETE method
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
       if (!response.ok) {
-        console.error(`Failed to update Zikr count for ID ${zikrId}`);
+        console.error(`Failed to delete Zikr with ID ${id}`);
         return;
       }
+      window.location.reload();
+      // Handle successful deletion, e.g., refresh data
+    } catch (error) {
+      console.error(`Error deleting Zikr with ID ${id}:`, error);
+    }
+  };
+  const handleCardClick = async (zikrId, e) => {
+    try {
+      if (
+        e.target.tagName !== "path" &&
+        !e.target.classList.contains("edit-btn")
+      ) {
+        const token = localStorage.getItem("authToken");
+        const response = await fetch(
+          `${api}/api/v1/zikrs/update/${zikrId}/inc/`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        if (!response.ok) {
+          console.error(`Failed to update Zikr count for ID ${zikrId}`);
+          return;
+        }
 
-      const updatedZikr = await response.json();
+        const updatedZikr = await response.json();
 
-      setZikrData((prevZikrData) =>
-        prevZikrData.map((zikr) =>
-          zikr.id === zikrId
-            ? { ...zikr, count_val: updatedZikr.count_val }
-            : zikr
-        )
-      );
+        setZikrData((prevZikrData) =>
+          prevZikrData.map((zikr) =>
+            zikr.id === zikrId
+              ? { ...zikr, count_val: updatedZikr.count_val }
+              : zikr
+          )
+        );
+      }
     } catch (error) {
       console.error(`Error updating Zikr count for ID ${zikrId}:`, error);
     }
@@ -78,7 +115,7 @@ const Home = ({ api }) => {
 
     fetchUserData();
     fetchZikrData();
-  }, []);
+  }, [update]);
 
   const fetchZikrData = async () => {
     try {
@@ -104,15 +141,29 @@ const Home = ({ api }) => {
 
   return (
     <main className="home container">
-      <div className={`overlay ${showMeaningModal ? "show" : ""}`}></div>
+      <div
+        className={`overlay ${showMeaningModal || showEditModal ? "show" : ""}`}
+      ></div>
       <div className="zikr-cards">
         {zikrData.map((zikr) => (
           <div
-            onClick={() => handleCardClick(zikr.id)}
+            onClick={(e) => handleCardClick(zikr.id, e)}
             className="card"
             key={zikr.id}
           >
-            <h4 className="zikr-title">{zikr.category}</h4>
+            <div className="zikr-header">
+              <h4 className="zikr-title">{zikr.category}</h4>
+              <div className="zikr-del-upd">
+                <MdEditSquare
+                  className="edit-btn"
+                  onClick={() => handleShowEditModal(zikr.id)}
+                />
+                <MdDelete
+                  onClick={() => handleDelete(zikr.id)}
+                  className="del-btn"
+                />
+              </div>
+            </div>
             <p className="zikr-text">{zikr.text}</p>
             <div className="zikr-info">
               <p
@@ -140,7 +191,14 @@ const Home = ({ api }) => {
           </div>
         ))}
       </div>
-
+      {showEditModal && (
+        <EditModal
+          api={api}
+          setShowEditModal={setShowEditModal}
+          zikrId={editCardId}
+          setUpdate={setUpdate}
+        />
+      )}
       {/* <PostZikrs /> */}
     </main>
   );

@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import "../styles/header.scss";
-import { FiEdit } from "react-icons/fi";
 import { MdOutlineAddBox } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { GoSignOut } from "react-icons/go";
 import { Link } from "react-router-dom";
+import { FaHome } from "react-icons/fa";
 
 function Header({ userInfo, api }) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -73,9 +73,9 @@ function Header({ userInfo, api }) {
             <FaUser onClick={handleShowProfileMenu} className="user-img" />
             {showProfileMenu && (
               <ul className="profile-menu">
-                <Link to="/edit" className="menu-item menu-click">
-                  <FiEdit />
-                  <span className="menu-click">Edit</span>
+                <Link to="/" className="menu-item menu-click">
+                  <FaHome />
+                  <span className="menu-click">Home</span>
                 </Link>
                 <Link to="/add" className="menu-item menu-click">
                   <MdOutlineAddBox />
