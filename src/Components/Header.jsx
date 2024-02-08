@@ -70,9 +70,6 @@ function Header({ userInfo, api }) {
           </div> */}
           <div ref={profileMenuRef} className="profile-info">
             <div className="username">{userInfo.username}</div>
-            <div className="profile-img">
-              <img src={userInfo.profile_image} alt="profile img" />
-            </div>
             <FaUser onClick={handleShowProfileMenu} className="user-img" />
             {showProfileMenu && (
               <ul className="profile-menu">

@@ -51,7 +51,7 @@ function Signin({ api }) {
             type="text"
             id="username"
             placeholder="Username"
-            autoComplete="off"
+            autoComplete="username"
             value={formData["username"]}
             onChange={(e) =>
               setFormData((prevData) => ({
@@ -67,7 +67,7 @@ function Signin({ api }) {
             type="password"
             id="password"
             placeholder="Password"
-            autoComplete="off"
+            autoComplete="password"
             value={formData["password"]}
             onChange={(e) =>
               setFormData((prevData) => ({
