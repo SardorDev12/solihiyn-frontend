@@ -70,6 +70,9 @@ function Header({ userInfo, api }) {
           </div> */}
           <div ref={profileMenuRef} className="profile-info">
             <div className="username">{userInfo.username}</div>
+            <div className="profile-img">
+              <img src={userInfo.profile_image} alt="profile img" />
+            </div>
             <FaUser onClick={handleShowProfileMenu} className="user-img" />
             {showProfileMenu && (
               <ul className="profile-menu">
@@ -82,10 +85,10 @@ function Header({ userInfo, api }) {
                   <span className="menu-click">Add</span>
                 </Link>
                 <hr />
-                <Link to="/profile" className="menu-item menu-click">
+                {/* <Link to="/profile" className="menu-item menu-click">
                   <CgProfile />
                   <span className="menu-click">Profile</span>
-                </Link>
+                </Link> */}
                 <Link className="menu-item menu-click" onClick={handleLogout}>
                   <GoSignOut />
                   <span className="menu-click">Logout</span>
