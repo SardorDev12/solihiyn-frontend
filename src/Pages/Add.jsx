@@ -30,8 +30,6 @@ function Add({ api }) {
         return;
       }
 
-      fetchZikrData();
-
       setNewZikrText("");
       setNewZikrCategory("");
       setNewZikrMeaning("");
