@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../styles/home.scss";
 import { FaWindowClose } from "react-icons/fa";
 import { MdEditSquare } from "react-icons/md";
 import { MdDelete } from "react-icons/md";
 import EditModal from "../Components/EditModal";
+import { GrPowerReset } from "react-icons/gr";
+import { CiMenuKebab } from "react-icons/ci";
 
 const Home = ({ api }) => {
   const [userData, setUserData] = useState(null);
@@ -14,8 +16,25 @@ const Home = ({ api }) => {
   const [showMeaningModal, setShowMeaningModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editCardId, setEditCardId] = useState(null);
+  const [showCardMenu, setShowCardMenu] = useState(true);
+  const cardMenuRef = useRef(null);
 
-  const handleShowEditModal = (id) => {
+  const handleShowCardMenu = (zikrId) => {
+    setShowCardMenu((prevState) => ({
+      [zikrId]: !prevState[zikrId],
+    }));
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", (e) => {
+      if (!e.target.classList.contains("card-menu__icon")) {
+        setShowCardMenu(false);
+      }
+    });
+  }, []);
+
+  const handleShowEditModal = (id, e) => {
+    e.stopPropagation();
     setShowEditModal(!showEditModal);
     setEditCardId(id);
   };
@@ -45,7 +64,10 @@ const Home = ({ api }) => {
     try {
       if (
         e.target.tagName !== "path" &&
-        !e.target.classList.contains("edit-btn")
+        !e.target.classList.contains("edit-btn") &&
+        !e.target.classList.contains("reset-btn") &&
+        !e.target.classList.contains("card-menu__icon") &&
+        !e.target.classList.contains("card-menu__item")
       ) {
         const token = localStorage.getItem("authToken");
         const response = await fetch(
@@ -78,8 +100,32 @@ const Home = ({ api }) => {
     }
   };
 
-  const handleMeaningClick = (zikrId, event) => {
-    event.stopPropagation();
+  const handleReset = async (zikrId, e) => {
+    e.stopPropagation();
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await fetch(
+        `${api}/api/v1/zikrs/update/${zikrId}/reset/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        console.error(`Failed to update Zikr count for ID ${zikrId}`);
+        return;
+      }
+      window.location.reload();
+    } catch (error) {}
+  };
+
+  const handleMeaningClick = (zikrId, e) => {
+    e.stopPropagation();
+
     setSelectedZikrId(zikrId);
     setShowMeaningModal(!showMeaningModal);
   };
@@ -153,16 +199,37 @@ const Home = ({ api }) => {
           >
             <div className="zikr-header">
               <h4 className="zikr-title">{zikr.category}</h4>
-              <div className="zikr-del-upd">
-                <MdEditSquare
-                  className="edit-btn"
-                  onClick={() => handleShowEditModal(zikr.id)}
-                />
-                <MdDelete
-                  onClick={() => handleDelete(zikr.id)}
-                  className="del-btn"
-                />
-              </div>
+              <CiMenuKebab
+                onClick={() => handleShowCardMenu(zikr.id)}
+                className="card-menu__icon"
+              />
+              {showCardMenu[zikr.id] ? (
+                <div className="card-menu">
+                  <div
+                    className="card-menu__item edit-icon"
+                    onClick={(e) => handleShowEditModal(zikr.id, e)}
+                  >
+                    <MdEditSquare className="card-menu__icon" />
+                    <span>Update</span>
+                  </div>
+                  <div
+                    className="card-menu__item"
+                    onClick={(e) => handleReset(zikr.id, e)}
+                  >
+                    <GrPowerReset className="card-menu__icon" />
+                    <span>Reset</span>
+                  </div>
+                  <div
+                    className="card-menu__item"
+                    onClick={() => handleDelete(zikr.id)}
+                  >
+                    <MdDelete className="card-menu__icon" />
+                    <span>Delete</span>
+                  </div>
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             <p className="zikr-text">{zikr.text}</p>
             <div className="zikr-info">

@@ -23,17 +23,73 @@
 
     .zikr-header {
       @include flex-col;
-      .del-btn,
-      .edit-btn {
+      position: relative;
+
+      .card-menu__icon {
         font-size: 1.5rem;
-        margin: 0 0.5rem;
+        margin: 0 0 0 1.5rem;
         cursor: pointer;
+        @media screen and (max-width: $tablet) {
+          font-size: 4rem;
+          margin: 0 0 0 2rem;
+        }
+
+        @media screen and (max-width: $mobileL) {
+          font-size: 3rem;
+        }
       }
 
+      .card-menu {
+        background-color: #d88744ec;
+        position: absolute;
+        top: 2em;
+        right: 0;
+        border-radius: $border-rad;
+
+        .card-menu__item {
+          @include flex-col;
+          justify-content: flex-start;
+          gap: 0.5rem;
+          padding: 0.5rem 1rem;
+          color: rgb(255, 255, 255);
+          cursor: pointer;
+          transition: all 0.2s ease-in-out;
+          @media screen and (max-width: $tablet) {
+            font-size: 1.5rem;
+          }
+          @media screen and (max-width: $mobileL) {
+            font-size: 1.5rem;
+          }
+
+          .card-menu__icon {
+            font-size: 1.5rem;
+            margin: 0;
+            @media screen and (max-width: $tablet) {
+              font-size: 2.5rem;
+            }
+            @media screen and (max-width: $mobileL) {
+              font-size: 2.5rem;
+            }
+          }
+
+          &:hover {
+            background-color: #97531b;
+            border-radius: $border-rad;
+          }
+        }
+      }
+
+      .zikr-title {
+        @media screen and (max-width: $tablet) {
+          font-size: 2rem;
+        }
+        @media screen and (max-width: $mobileL) {
+          font-size: 1.5rem;
+        }
+      }
       .edit-btn {
         color: green;
       }
-
       .del-btn {
         color: darkred;
       }
@@ -45,6 +101,10 @@
       min-height: 4rem;
       border-radius: $border-rad;
       margin: 1rem 0;
+
+      @media screen and (max-width: $tablet) {
+        font-size: 1.5rem;
+      }
     }
     .zikr-info {
       @include flex-col;
@@ -100,6 +160,7 @@
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.457);
+  z-index: 1;
   &.show {
     display: block;
   }
