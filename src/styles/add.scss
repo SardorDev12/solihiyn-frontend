@@ -6,6 +6,10 @@
   @include flex-col;
   justify-content: space-evenly;
 
+  @media screen and (max-width: $mobileL) {
+    padding: $mobile-pad;
+  }
+
   .add-form {
     text-align: center;
     .form-title {

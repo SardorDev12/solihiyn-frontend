@@ -4,7 +4,7 @@ import Signup from "./Pages/Signup";
 import Add from "./Pages/Add";
 import Edit from "./Pages/Edit";
 import Signin from "./Pages/Signin";
-import Profile from "./Pages/Profile";
+import HowToUse from "./Pages/HowToUse";
 import Global from "./Pages/Layouts/Global";
 import { APIContext } from "./Components/Context";
 import { useContext, useEffect, useState } from "react";
@@ -43,10 +43,7 @@ function App() {
           <Route index element={<Home api={api} />} />
           <Route path="/add" element={<Add api={api} />} />
           <Route path="/edit" element={<Edit />} />
-          {/* <Route
-            path="/profile"
-            element={<Profile api={api} userInfo={userInfo} />}
-          /> */}
+          <Route path="/use" element={<HowToUse />} />
         </Route>
         <Route path="/signup" element={<Signup api={api} />} />
         <Route path="/signin" element={<Signin api={api} />} />

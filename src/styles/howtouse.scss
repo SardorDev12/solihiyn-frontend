@@ -1,0 +1,40 @@
+@import "./variables.scss";
+
+.use {
+  padding: $base-pad;
+  padding-top: 5rem;
+  margin-bottom: 2rem;
+
+  @media screen and (max-width: $tablet) {
+    padding: $mobile-pad;
+  }
+
+  .section-title {
+    text-align: center;
+    font-size: 3rem;
+
+    @media screen and (max-width: $tablet) {
+      padding-top: 5rem;
+      font-size: 2rem;
+    }
+  }
+
+  .use-cases {
+    .case {
+      .case-title {
+        font-weight: 400;
+        margin: 2rem 0;
+      }
+
+      .case-img {
+        width: 70%;
+        margin: 0 auto;
+        border: 2px solid white;
+
+        @media screen and (max-width: $tablet) {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

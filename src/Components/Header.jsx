@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaUser } from "react-icons/fa";
 import "../styles/header.scss";
 import { MdOutlineAddBox } from "react-icons/md";
@@ -6,6 +6,7 @@ import { CgProfile } from "react-icons/cg";
 import { GoSignOut } from "react-icons/go";
 import { Link } from "react-router-dom";
 import { FaHome } from "react-icons/fa";
+import { CiDesktopMouse2 } from "react-icons/ci";
 
 function Header({ userInfo, api }) {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
@@ -64,10 +65,6 @@ function Header({ userInfo, api }) {
           </Link>
         </div>
         <div className="profile">
-          {/* <div className="status">
-            <button type="button">Active</button>
-            <button type="button">Missed</button>
-          </div> */}
           <div ref={profileMenuRef} className="profile-info">
             <div className="username">{userInfo.username}</div>
             <FaUser onClick={handleShowProfileMenu} className="user-img" />
@@ -82,10 +79,10 @@ function Header({ userInfo, api }) {
                   <span className="menu-click">Add</span>
                 </Link>
                 <hr />
-                {/* <Link to="/profile" className="menu-item menu-click">
-                  <CgProfile />
-                  <span className="menu-click">Profile</span>
-                </Link> */}
+                <Link to="/use" className="menu-item menu-click">
+                  <CiDesktopMouse2 />
+                  <span className="menu-click">How to use</span>
+                </Link>
                 <Link className="menu-item menu-click" onClick={handleLogout}>
                   <GoSignOut />
                   <span className="menu-click">Logout</span>
