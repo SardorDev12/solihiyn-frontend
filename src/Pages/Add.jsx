@@ -7,6 +7,8 @@ function Add({ api }) {
   const [newZikrCategory, setNewZikrCategory] = useState("");
   const [newZikrMeaning, setNewZikrMeaning] = useState("");
   const [newZikrCount, setNewZikrCount] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleCreateZikr = async () => {
     try {
@@ -27,6 +29,11 @@ function Add({ api }) {
 
       if (!response.ok) {
         console.error("Failed to create Zikr");
+        setShowMessage(true);
+        setMessage("Error!");
+        setTimeout(() => {
+          setShowMessage(false);
+        }, 1000);
         return;
       }
 
@@ -34,6 +41,12 @@ function Add({ api }) {
       setNewZikrCategory("");
       setNewZikrMeaning("");
       setNewZikrCount("");
+      setShowMessage(true);
+      setMessage("Added!");
+
+      setTimeout(() => {
+        setShowMessage(false);
+      }, 1000);
     } catch (error) {
       console.error("Error creating Zikr:", error);
     }
@@ -48,6 +61,7 @@ function Add({ api }) {
               <label htmlFor="newZikrCategory">Category</label>
               <input
                 type="text"
+                required
                 autoComplete="off"
                 id="newZikrCategory"
                 placeholder="Zikrlar"
@@ -59,6 +73,7 @@ function Add({ api }) {
               <label htmlFor="newZikrCount">Count</label>
               <input
                 type="number"
+                required
                 autoComplete="off"
                 id="newZikrCount"
                 placeholder="33"
@@ -71,6 +86,7 @@ function Add({ api }) {
             <label htmlFor="newZikrText">Text</label>
             <textarea
               type="text"
+              required
               id="newZikrText"
               placeholder="Alhamdulillah"
               value={newZikrText}
@@ -81,6 +97,7 @@ function Add({ api }) {
             <label htmlFor="newZikrMeaning">Meaning</label>
             <textarea
               type="text"
+              required
               id="newZikrMeaning"
               placeholder="Allohga hamdlar bo'lsin!"
               value={newZikrMeaning}
@@ -88,9 +105,10 @@ function Add({ api }) {
             />
           </div>
         </div>
-        <button className="add-btn" type="button" onClick={handleCreateZikr}>
+        <button className="add-btn" type="submit" onClick={handleCreateZikr}>
           Create Zikr
         </button>
+        {showMessage && <p className="success-message">{message}</p>}
       </form>
       <div className="add-page__img">
         <img src={prayingBoy} alt="praying boy" />

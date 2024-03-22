@@ -72,6 +72,11 @@
           cursor: pointer;
           padding: 0.5rem 1rem;
 
+          @media screen and (max-width: $mobileL) {
+            font-size: 1.3rem;
+            padding: 0.8rem 1.5rem;
+          }
+
           &:hover {
             color: #001f3f;
             background-color: #bee3f8;

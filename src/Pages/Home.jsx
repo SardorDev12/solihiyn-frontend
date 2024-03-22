@@ -55,7 +55,6 @@ const Home = ({ api }) => {
         return;
       }
       window.location.reload();
-      // Handle successful deletion, e.g., refresh data
     } catch (error) {
       console.error(`Error deleting Zikr with ID ${id}:`, error);
     }

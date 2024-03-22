@@ -17,6 +17,10 @@
     width: 90vw;
   }
 
+  @media screen and (max-width: $mobileL) {
+    padding: 1rem;
+  }
+
   .edit-modal__header {
     @include flex-col;
   }

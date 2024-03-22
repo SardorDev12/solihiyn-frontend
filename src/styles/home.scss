@@ -50,7 +50,7 @@
           @include flex-col;
           justify-content: flex-start;
           gap: 0.5rem;
-          padding: 0.5rem 1rem;
+          padding: 1rem 1.5rem;
           color: rgb(255, 255, 255);
           cursor: pointer;
           transition: all 0.2s ease-in-out;
@@ -58,7 +58,7 @@
             font-size: 1.5rem;
           }
           @media screen and (max-width: $mobileL) {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
           }
 
           .card-menu__icon {
@@ -68,7 +68,7 @@
               font-size: 2.5rem;
             }
             @media screen and (max-width: $mobileL) {
-              font-size: 2.5rem;
+              font-size: 1.5rem;
             }
           }
 
@@ -129,6 +129,11 @@
 
         @media screen and (max-width: $tablet) {
           width: 90vw;
+        }
+
+        @media screen and (max-width: $mobileL) {
+          font-size: 1.4rem;
+          padding: 3rem 1rem 1rem;
         }
 
         .zikr-meaning__close {
