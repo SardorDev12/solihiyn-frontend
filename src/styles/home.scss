@@ -21,6 +21,10 @@
     padding: 1rem;
     color: #001f3f;
 
+    &:active {
+      background-color: #d1f8be;
+    }
+
     .zikr-header {
       @include flex-col;
       position: relative;
