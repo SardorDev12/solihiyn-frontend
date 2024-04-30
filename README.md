@@ -1,1 +1,1 @@
-Host - ?
+Host - https://solihiyn.netlify.app/
